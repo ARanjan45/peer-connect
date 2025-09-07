@@ -9,9 +9,7 @@ import Link from 'next/link';
 import { ThemeToggle } from '@/components/ui/theme/theme-toggle';
 import { Badge } from '@/components/ui/badge';
 
-interface Props {} // FIX 1: Changed from type Props = {} to interface Props {}
-
-const DesktopNav = () => { // FIX 2: Removed unused Props parameter since it wasn't being used
+const DesktopNav = () => {
     const paths = useNavigation();
     return (
         <Card className="hidden lg:flex lg:flex-col lg:justify-between lg:items-center lg:h-full lg:w-16 lg:px-2 lg:py-4">
@@ -20,6 +18,7 @@ const DesktopNav = () => { // FIX 2: Removed unused Props parameter since it was
                     {paths.map((path, id) => {
                         return (
                             <li key={id} className="relative">
+                                
                                 
                                     <Tooltip>
                                         <TooltipTrigger asChild> 
