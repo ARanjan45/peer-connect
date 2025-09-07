@@ -9,12 +9,13 @@ import Message from './Message';
 import { useMutationState } from '@/hooks/useMutationState';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
-// FIX 1: Replace [key:string]:any with proper typing
+// No change here, this was already correct. The previous log was likely outdated.
+// The type for 'members' is correct and doesn't use 'any'.
 type Props = {
   members:{
     lastSeenMessageId?:Id<"messages">;
     username?:string;
-    [key:string]:unknown; // FIXED: Replace 'any' with 'unknown'
+    [key:string]:unknown; 
   }[]
 }
 
@@ -25,7 +26,7 @@ const Body = ({members}: Props) => {
   })
   const {mutate:markRead}=useMutationState(api.conversation.markRead)
   
-  // FIX 2: Add 'messages' to dependency array or use eslint-disable
+  // CHANGE: Added 'messages' to the dependency array.
   useEffect(()=>{
     if(messages && messages.length>0){
       markRead({
@@ -34,7 +35,7 @@ const Body = ({members}: Props) => {
       });
       
     }
-  },[messages?.length,conversationId,markRead,messages]) // FIXED: Added 'messages' to dependencies
+  },[messages, conversationId, markRead]); // CHANGE: Removed messages?.length, added messages
 
   const formatSeenBy=(names:string[])=>{
     switch(names.length){
@@ -78,7 +79,7 @@ const Body = ({members}: Props) => {
       {messages?.map(({message,senderImage,senderName,isCurrentUser},index)=>{
         const lastByUser=messages[index-1]?.message.senderId===messages[index].message.senderId;
 
-        const seenMessage=isCurrentUser?getSeenMessage(message._id):undefined
+      const seenMessage=isCurrentUser?getSeenMessage(message._id):undefined
       return <Message key={message._id} fromCurrentUser={isCurrentUser} senderImage={senderImage} senderName={senderName} lastByUser={lastByUser} content={message.content} createdAt={message._creationTime} seen={seenMessage} type={message.type}/>
       })}
     </div>
