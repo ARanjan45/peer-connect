@@ -21,7 +21,7 @@ const chatMessageSchema=z.object({
 })
 
 const ChatInput = () => {
-  const textareaRef=useRef<HTMLTextAreaElement|null>(null);
+  const _textareaRef=useRef<HTMLTextAreaElement|null>(null); // FIX 1: Added underscore prefix since it's not used
   const{conversationId}=useConversation();
   const{mutate:createMessage,pending}=useMutationState(api.message.create)
   const form=useForm<z.infer<typeof chatMessageSchema>>({
@@ -30,8 +30,8 @@ const ChatInput = () => {
       content:"",
     },
   });
-  const handleInputChange=(event:any)=>{
-    const{value,selectionStart}=event.target;
+  const handleInputChange=(event:React.ChangeEvent<HTMLTextAreaElement> | React.MouseEvent<HTMLTextAreaElement>)=>{ // FIX 2: Handle both change and click events
+    const{value,selectionStart}=event.target as HTMLTextAreaElement;
     if(selectionStart!==null){
       form.setValue("content",value)
     }

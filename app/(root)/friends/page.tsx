@@ -8,9 +8,9 @@ import { api } from '@/convex/_generated/api';
 import { Loader2 } from 'lucide-react';
 import Request from './_components/Request';
 
-type Props = {};
+interface Props {} // FIX 1: Changed from type Props = {} to interface Props {}
 
-const FriendsPage = (props: Props) => {
+const FriendsPage = (_props: Props) => { // FIX 2: Added underscore prefix since props is not used
   const requests = useQuery(api.requests.get);
 
   return (

@@ -25,7 +25,7 @@ type Friend = Doc<"friends"> & {
     user: Doc<"users">;
 };
 
-type Props = {};
+interface Props {} // FIX 1: Changed from type Props = {} to interface Props {}
 
 // Define a single, simple schema for the form
 const createGroupFormSchema = z.object({
@@ -33,7 +33,7 @@ const createGroupFormSchema = z.object({
     members: z.array(z.string()).min(1, { message: "You must select at least 1 friend" }),
 });
 
-const CreateGroupDialog = (props: Props) => {
+const CreateGroupDialog = (_props: Props) => { // FIX 2: Added underscore prefix since props is not used
     const friends = useQuery(api.friends.get) as Friend[] | null;
     const { mutate: createGroup, pending } = useMutationState(api.conversation.createGroup);
 

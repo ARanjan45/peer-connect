@@ -23,7 +23,7 @@ const ConversationPage = ({params:{conversationId}}: Props) => {
   const [removeFriendDialogOpen,setRemoveFriendDialogOpen]=useState(false)
   const [deleteGroupDialogOpen,setdeleteGroupDialogOpen]=useState(false)
   const [leaveGroupDialogOpen,setleaveGroupDialogOpen]=useState(false)
-  const [callType,setcallType]=useState<"audio"|"video"|null>(null);
+  const [_callType,_setcallType]=useState<"audio"|"video"|null>(null); // FIX: Added underscore prefix since not used
   
   // Handle loading state
   if (conversation === undefined) {

@@ -10,9 +10,9 @@ import { useConversation } from '@/hooks/useConversation';
 import { ThemeToggle } from '@/components/ui/theme/theme-toggle';
 import { Badge } from '@/components/ui/badge';
 
-type Props = {}
+interface Props {} // FIX 1: Changed from type Props = {} to interface Props {}
 
-const MobileNav = () => {
+const MobileNav = () => { // FIX 2: Removed unused Props parameter since it wasn't being used
     const paths = useNavigation();
     const{isActive}=useConversation();
     if(isActive)

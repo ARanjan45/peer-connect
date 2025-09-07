@@ -4,7 +4,9 @@ import { useConversation } from '@/hooks/useConversation';
 import { cn } from '@/lib/utils';
 import React from 'react'
 
-type Props = React.PropsWithChildren<{}>
+interface Props { // FIX: Changed from type Props = React.PropsWithChildren<{}> to interface
+    children: React.ReactNode;
+}
 
 const ConversationContainer = ({ children }: Props) => {
     const { isActive } = useConversation();

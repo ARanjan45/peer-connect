@@ -9,11 +9,12 @@ import Message from './Message';
 import { useMutationState } from '@/hooks/useMutationState';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
+// FIX 1: Replace [key:string]:any with proper typing
 type Props = {
   members:{
     lastSeenMessageId?:Id<"messages">;
     username?:string;
-    [key:string]:any;
+    [key:string]:unknown; // FIXED: Replace 'any' with 'unknown'
   }[]
 }
 
@@ -23,6 +24,8 @@ const Body = ({members}: Props) => {
     id:conversationId as Id<"conversations">,
   })
   const {mutate:markRead}=useMutationState(api.conversation.markRead)
+  
+  // FIX 2: Add 'messages' to dependency array or use eslint-disable
   useEffect(()=>{
     if(messages && messages.length>0){
       markRead({
@@ -31,7 +34,7 @@ const Body = ({members}: Props) => {
       });
       
     }
-  },[messages?.length,conversationId,markRead])
+  },[messages?.length,conversationId,markRead,messages]) // FIXED: Added 'messages' to dependencies
 
   const formatSeenBy=(names:string[])=>{
     switch(names.length){

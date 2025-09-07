@@ -36,24 +36,7 @@ const ItemList = ({ children, title, action: Action }: Props) => {
     )
 }
 
-// ConversationContainer component that you'll need to update
-const ConversationContainer = ({ children }: React.PropsWithChildren) => {
-    const { isActive } = useConversation();
-    
-    return (
-        <div className={cn(
-            "h-full w-full",
-            {
-                // On mobile: show when conversation is active, hide when inactive
-                "block": isActive,
-                "hidden": !isActive,
-                // On desktop: always show
-                "lg:block": true
-            }
-        )}>
-            {children}
-        </div>
-    )
-}
+// FIX: Removed unused ConversationContainer component (line 40:7)
+// This component was assigned but never used and appears to be duplicate code
 
 export default ItemList
