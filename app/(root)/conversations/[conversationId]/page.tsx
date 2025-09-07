@@ -23,7 +23,6 @@ const ConversationPage = ({params:{conversationId}}: Props) => {
   const [removeFriendDialogOpen,setRemoveFriendDialogOpen]=useState(false)
   const [deleteGroupDialogOpen,setdeleteGroupDialogOpen]=useState(false)
   const [leaveGroupDialogOpen,setleaveGroupDialogOpen]=useState(false)
-  const [_callType,_setcallType]=useState<"audio"|"video"|null>(null);
   
   // Handle loading state
   if (conversation === undefined) {
