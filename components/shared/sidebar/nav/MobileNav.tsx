@@ -10,6 +10,8 @@ import { useConversation } from '@/hooks/useConversation';
 import { ThemeToggle } from '@/components/ui/theme/theme-toggle';
 import { Badge } from '@/components/ui/badge';
 
+type Props = {}
+
 const MobileNav = () => {
     const paths = useNavigation();
     const{isActive}=useConversation();
@@ -22,7 +24,6 @@ const MobileNav = () => {
                     {paths.map((path, id) => {
                         return (
                             <li key={id} className="relative">
-                                
                                 
                                     <Tooltip>
                                         <TooltipTrigger asChild> 
@@ -44,7 +45,7 @@ const MobileNav = () => {
                                             <p>{path.name}</p>
                                         </TooltipContent>
                                     </Tooltip>
-                            
+                                
                             </li>
                         );
                     })}

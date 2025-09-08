@@ -34,7 +34,7 @@ const LeaveGroupDialog =
                     Are You Sure?
                 </AlertDialogTitle>
                 <AlertDialogDescription>
-                    This action cannot be undone. You will no longer be a member of this group and won&apos;t be able to see, send or receive any messages from this group
+                    This action cannot be undone. You will no longer be a member of this group and won't be able to see, send or receive any messages from this group
                 </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>

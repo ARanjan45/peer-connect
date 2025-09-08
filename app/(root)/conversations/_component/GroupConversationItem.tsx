@@ -1,8 +1,8 @@
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { Id } from '@/convex/_generated/dataModel';
-import { Avatar, AvatarFallback } from '@radix-ui/react-avatar'; // FIX 1: Removed unused AvatarImage import
-import { Users } from 'lucide-react'; // FIX 2: Removed unused User import
+import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'; 
+import { User, Users } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 

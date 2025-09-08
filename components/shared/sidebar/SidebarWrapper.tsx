@@ -2,9 +2,7 @@ import React from 'react'
 import DesktopNav from './nav/DesktopNav';
 import MobileNav from './nav/MobileNav';
 
-interface Props { // FIX: Changed from type Props = React.PropsWithChildren<{}> to interface
-  children: React.ReactNode;
-}
+type Props = React.PropsWithChildren<{}>;
 
 const SidebarWrapper = ({children}: Props) => {
   return (

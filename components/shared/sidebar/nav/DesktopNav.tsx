@@ -9,6 +9,8 @@ import Link from 'next/link';
 import { ThemeToggle } from '@/components/ui/theme/theme-toggle';
 import { Badge } from '@/components/ui/badge';
 
+type Props = {}
+
 const DesktopNav = () => {
     const paths = useNavigation();
     return (
@@ -18,7 +20,6 @@ const DesktopNav = () => {
                     {paths.map((path, id) => {
                         return (
                             <li key={id} className="relative">
-                                
                                 
                                     <Tooltip>
                                         <TooltipTrigger asChild> 
