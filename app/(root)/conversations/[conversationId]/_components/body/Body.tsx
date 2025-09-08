@@ -48,23 +48,24 @@ const Body = ({members}: Props) => {
           {`Seen by ${names[0]} and ${names[1]}`}
         </p>
       default:
-        return 
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <p className="text-muted-foreground text-sm text-right">
-                {`Seen by ${names[0]},${names[1]}, and ${names.length-2} more`}
-              </p>
-            </TooltipTrigger>
-            <TooltipContent>
-              <ul>
-                {names.map((name,index)=>{
-                  return <li key={index}>{name}</li>
-                })}
-              </ul>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        return (
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <p className="text-muted-foreground text-sm text-right">
+                  {`Seen by ${names[0]},${names[1]}, and ${names.length-2} more`}
+                </p>
+              </TooltipTrigger>
+              <TooltipContent>
+                <ul>
+                  {names.map((name,index)=>{
+                    return <li key={index}>{name}</li>
+                  })}
+                </ul>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        )
     }
   }
   
