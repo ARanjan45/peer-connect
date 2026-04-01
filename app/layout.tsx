@@ -20,7 +20,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "PeerConnect",
   description: "Connect with your peers and help each other",
-  
+  icons:{
+    icon:"/logo.ico",
+    shortcut: "/logo.ico",
+  }
 };
 
 export default function RootLayout({

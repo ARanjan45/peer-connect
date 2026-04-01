@@ -1,5 +1,8 @@
 import { v } from "convex/values";
 import { internalMutation, internalQuery } from "./_generated/server";
+import { query } from "./_generated/server";
+import { ConvexError } from "convex/values";
+import { getUserByClerkId } from "./_utils";
 
 // This mutation will either create a new user or update an existing one
 export const store = internalMutation({
@@ -62,5 +65,47 @@ export const remove = internalMutation({
         } else {
             console.log(`Attempted to delete non-existent user with clerkId: ${args.clerkId}`);
         }
+    },
+});
+export const searchUsers = query({
+    args: { searchTerm: v.string() },
+    handler: async (ctx, args) => {
+        const identity = await ctx.auth.getUserIdentity();
+        if (!identity) throw new ConvexError("Unauthorized");
+
+        const currentUser = await getUserByClerkId({
+            ctx, clerkId: identity.subject
+        });
+        if (!currentUser) throw new ConvexError("User not found");
+
+        if (args.searchTerm.trim() === "") return [];
+
+        const allUsers = await ctx.db.query("users").collect();
+
+        // get all friend IDs
+        const friends1 = await ctx.db.query("friends")
+            .withIndex("by_user1", (q) => q.eq("user1", currentUser._id)).collect();
+        const friends2 = await ctx.db.query("friends")
+            .withIndex("by_user2", (q) => q.eq("user2", currentUser._id)).collect();
+
+        const friendIdStrings = [
+            ...friends1.map(f => f.user2.toString()),
+            ...friends2.map(f => f.user1.toString()),
+        ];
+
+
+        const term = args.searchTerm.toLowerCase();
+
+        return allUsers
+    .filter(user =>
+        user._id.toString() !== currentUser._id.toString() &&
+        (user.username.toLowerCase().includes(term) ||
+            user.email.toLowerCase().includes(term))
+    )
+    .map(user => ({
+        id: user._id,
+        username: user.username,
+        email: user.email,
+    }));
     },
 });

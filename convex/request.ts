@@ -131,4 +131,49 @@ export const accept= mutation ({
         await ctx.db.delete(request._id);
 
     },
-})
+});
+export const createById = mutation({
+    args: { receiverId: v.id("users") },
+    handler: async (ctx, args) => {
+        const identity = await ctx.auth.getUserIdentity();
+        if (!identity) throw new ConvexError("Unauthorized");
+
+        const currentUser = await getUserByClerkId({
+            ctx, clerkId: identity.subject
+        });
+        if (!currentUser) throw new ConvexError("User not found");
+
+        if (args.receiverId === currentUser._id)
+            throw new ConvexError("Can't send a request to yourself");
+
+        const receiver = await ctx.db.get(args.receiverId);
+        if (!receiver) throw new ConvexError("User not found");
+
+        const requestAlreadySent = await ctx.db.query("requests")
+            .withIndex("by_receiver_sender", (q) =>
+                q.eq("receiver", receiver._id).eq("sender", currentUser._id)
+            ).unique();
+        if (requestAlreadySent) throw new ConvexError("Request already sent");
+
+        const requestAlreadyReceived = await ctx.db.query("requests")
+            .withIndex("by_receiver_sender", (q) =>
+                q.eq("receiver", currentUser._id).eq("sender", receiver._id)
+            ).unique();
+        if (requestAlreadyReceived)
+            throw new ConvexError("This user has already sent you a request");
+
+        const friends1 = await ctx.db.query("friends")
+            .withIndex("by_user1", (q) => q.eq("user1", currentUser._id)).collect();
+        const friends2 = await ctx.db.query("friends")
+            .withIndex("by_user2", (q) => q.eq("user2", currentUser._id)).collect();
+
+        if (friends1.some(f => f.user2 === receiver._id) ||
+            friends2.some(f => f.user1 === receiver._id))
+            throw new ConvexError("You are already friends with this user");
+
+        return await ctx.db.insert("requests", {
+            sender: currentUser._id,
+            receiver: receiver._id,
+        });
+    },
+});
